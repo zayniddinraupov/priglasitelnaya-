@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приглашение на свадьбу</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Montserrat', sans-serif;
             background: #1a1a1a;
-            color: #f5f5f0;
+            color: #f3f1ee;
             line-height: 1.6;
             overflow-x: hidden;
             overflow-y: hidden;
             min-height: 100vh;
         }
-
+        
         .video-bg {
             position: fixed;
             top: 0;
@@ -35,7 +34,7 @@
             opacity: 1;
             visibility: visible;
         }
-
+        
         .container {
             position: relative;
             z-index: 2;
@@ -43,7 +42,7 @@
             margin: 0 auto;
             padding: 20px;
         }
-
+        
         /* Cover */
         .cover {
             position: relative;
@@ -59,33 +58,41 @@
             z-index: 2;
         }
 
-        .cover-opened {
+         .cover-opened {
             opacity: 0;
             transform: scale(1.1) translateY(-50px);
             pointer-events: none;
         }
-
+        
         .cover-title {
             font-family: 'Playfair Display', serif;
             font-size: 50px;
             font-weight: 400;
             margin-bottom: 15px;
-            color: #ffffff;
-            animation: fadeInUp 1s ease;
+            animation: fadeInUp 1s ease, shine 3s linear infinite;
             letter-spacing: 5px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .cover-subtitle {
             font-family: 'Great Vibes', cursive;
             font-size: 52px;
             font-weight: 400;
             margin-bottom: 35px;
-            color: #c9b896;
-            animation: fadeInUp 1s ease 0.2s both;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease 0.2s both, shine 3s linear infinite;
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .cover-heart {
             width: 180px;
             height: 180px;
@@ -95,7 +102,7 @@
             animation: pulse 2s ease-in-out infinite;
             filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5));
         }
-
+        
         .cover-heart:hover {
             transform: scale(1.2) rotate(5deg);
             filter: drop-shadow(0 0 30px rgba(201, 184, 150, 0.6));
@@ -108,11 +115,15 @@
             letter-spacing: 2px;
             margin-top: 40px;
             opacity: 1;
-            animation: fadeInUp 1s ease 0.4s both;
-            color: #ffffff;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease 0.4s both, shine 3s linear infinite;
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .main-content {
             max-height: 0;
             opacity: 0;
@@ -121,7 +132,7 @@
             overflow: hidden;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        
         .main-content.visible {
             max-height: 9999px;
             opacity: 1;
@@ -142,7 +153,7 @@
             overflow: hidden;
             transition: all 0.4s ease;
         }
-
+        
         section::after {
             content: '';
             position: absolute;
@@ -152,7 +163,7 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(201, 184, 150, 0.3), transparent);
         }
-
+        
         section::before {
             content: '';
             position: absolute;
@@ -163,37 +174,46 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: left 0.5s ease;
         }
-
+        
         section:hover::before {
             left: 100%;
         }
-
+        
         section:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
             border-color: rgba(201, 184, 150, 0.3);
         }
-
+        
         /* Names */
         .names-title {
             font-family: 'Great Vibes', cursive;
             font-size: 48px;
             font-weight: 400;
             margin-bottom: 10px;
-            color: #c9b896;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 0.8s ease;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            animation: fadeInUp 0.8s ease, glow 2s ease-in-out infinite alternate, shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .date-title {
             font-size: 32px;
             font-weight: 300;
             letter-spacing: 10px;
-            color: #c9b896;
             margin: 20px 0;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         /* Text Styles */
         .invitation-text {
             font-size: 16px;
@@ -202,20 +222,32 @@
             max-width: 450px;
             margin: 12px auto;
             letter-spacing: 0.5px;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .section-title {
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 5px;
             text-transform: uppercase;
-            color: #c9b896;
             margin: 15px auto;
             position: relative;
             display: inline-block;
-            text-shadow: 0 0 15px rgba(201, 184, 150, 0.4);
+            filter: drop-shadow(0 0 15px rgba(201, 184, 150, 0.4));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .section-title::after {
             content: '';
             display: block;
@@ -225,38 +257,53 @@
             margin: 10px auto;
             box-shadow: 0 0 10px rgba(201, 184, 150, 0.5);
         }
-
+        
         .section-title-large {
             font-size: 22px;
             font-weight: 300;
-            color: #e9e1d6;
             margin: 10px auto;
             line-height: 1.5;
             max-width: 450px;
             letter-spacing: 0.5px;
-            text-shadow: 0 0 20px rgba(233, 225, 214, 0.3);
+            filter: drop-shadow(0 0 20px rgba(233, 225, 214, 0.3));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .guest-name {
-            font-size: 24px;
+            font-size: 50px;
             font-weight: 400;
             margin-bottom: 15px;
-            color: #c9b896;
             font-family: 'Great Vibes', cursive;
-            text-shadow: 0 0 20px rgba(201, 184, 150, 0.4);
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.4));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .section-title {
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 5px;
             text-transform: uppercase;
-            color: #c9b896;
             margin: 15px auto;
             position: relative;
             display: inline-block;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .section-title::after {
             content: '';
             display: block;
@@ -265,24 +312,34 @@
             background: linear-gradient(90deg, transparent, #c9b896, transparent);
             margin: 10px auto;
         }
-
+        
         .section-title-large {
             font-size: 20px;
             font-weight: 300;
-            color: #e9e1d6;
             margin: 10px auto;
             line-height: 1.5;
             max-width: 450px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .guest-name {
-            font-size: 35px;
+            font-size: 30px;
             font-weight: 400;
             margin-bottom: 15px;
-            color: #c9b896;
             font-family: 'Great Vibes', cursive;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         /* Countdown */
         .countdown {
             display: flex;
@@ -291,7 +348,7 @@
             margin: 20px auto;
             flex-wrap: wrap;
         }
-
+        
         .countdown-item {
             text-align: center;
             min-width: 70px;
@@ -302,50 +359,59 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(201, 184, 150, 0.2);
         }
-
+        
         .countdown-item:hover {
             transform: scale(1.1);
             background: rgba(201, 184, 150, 0.2);
             box-shadow: 0 0 25px rgba(201, 184, 150, 0.4);
         }
-
+        
         .countdown-number {
             font-size: 36px;
             font-weight: 300;
-            color: #c9b896;
             display: block;
             line-height: 1;
-            text-shadow: 0 0 20px rgba(201, 184, 150, 0.5);
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.5));
             transition: all 0.3s ease;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .countdown-number.animate {
             animation: countPulse 0.6s ease;
         }
-
+        
         @keyframes countPulse {
             0% {
                 transform: scale(1);
             }
-
             50% {
                 transform: scale(1.2);
                 text-shadow: 0 0 30px rgba(201, 184, 150, 0.8);
             }
-
             100% {
                 transform: scale(1);
             }
         }
-
+        
         .countdown-label {
             font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
             opacity: 0.7;
             margin-top: 5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .countdown-item {
             text-align: center;
             min-width: 70px;
@@ -355,28 +421,39 @@
             border: 1px solid rgba(201, 184, 150, 0.3);
             transition: all 0.3s ease;
         }
-
+        
         .countdown-item:hover {
             transform: scale(1.1);
             background: rgba(201, 184, 150, 0.2);
         }
-
+        
         .countdown-number {
             font-size: 36px;
             font-weight: 300;
-            color: #c9b896;
             display: block;
             line-height: 1;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .countdown-label {
             font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
             opacity: 0.7;
             margin-top: 5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         /* Calendar */
         .calendar-grid {
             display: grid;
@@ -386,120 +463,74 @@
             margin: 20px auto;
             font-size: 13px;
         }
-
+        
         .calendar-day {
             text-align: center;
             padding: 10px 5px;
             border-radius: 50%;
             transition: all 0.3s ease;
         }
-
+        
         .calendar-day:hover:not(.calendar-header):not(.calendar-wedding) {
             background: rgba(201, 184, 150, 0.2);
             transform: scale(1.1);
         }
-
+        
         .calendar-header {
             opacity: 0.5;
             font-weight: 500;
         }
-
-.calendar-wedding {
- background: linear-gradient(135deg, #d4c4a8, #c9b896);
- color: #1a1a1a !important;
- font-weight:800;
- font-size:16px;
- box-shadow:4px15px rgba(201,184,150,0.6), inset008px rgba(255,255,255,0.3);
- text-shadow:2px2px4px rgba(255,255,255,0.9),0010px rgba(255,255,255,0.5);
- z-index:2;
- border:2px solid #e8dcc8;
- }
-
-.heart-bg {
- position: absolute;
- font-size:35px;
- line-height:1;
- top:50%;
- left:50%;
- transform: translate(-50%, -50%);
- z-index:0;
- animation: heartbeat1.3s ease-in-out infinite;
- filter: drop-shadow(008px rgba(255,100,100,0.6));
- opacity:0.4;
- }
-
+        
         .calendar-wedding {
-            position: relative;
-            z-index: 1;
+            background: linear-gradient(135deg, #c9b896 0%, #b5a583 100%);
+            color: #1a1a1a;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(201, 184, 150, 0.4);
         }
-
-        .calendar-day {
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes heartbeat {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            5% {
-                transform: translate(-50%, -50%) scale(1.25);
-            }
-
-            10% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            15% {
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-
-            20% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            55% {
-                transform: translate(-50%, -50%) scale(1.25);
-            }
-
-            60% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            65% {
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-
-            70% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
+        
         /* Location */
         .location-address {
             font-size: 22px;
             font-weight: 400;
             margin: 15px auto;
             max-width: 400px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .location-note {
             font-size: 15px;
             font-weight: 300;
             opacity: 0.8;
             max-width: 400px;
             margin: 10px auto;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
+        .dress-text {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 450px;
+            margin: 12px auto;
+            letter-spacing: 0.5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .map-btn {
             display: inline-block;
             padding: 12px 40px;
@@ -513,12 +544,12 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
+        
         .map-btn:hover {
             background: #c9b896;
             color: #1a1a1a;
         }
-
+        
         .map-btn::before {
             content: '';
             position: absolute;
@@ -529,48 +560,59 @@
             background: linear-gradient(90deg, transparent, rgba(201, 184, 150, 0.3), transparent);
             transition: left 0.5s ease;
         }
-
+        
         .map-btn:hover::before {
             left: 100%;
         }
-
+        
         .map-btn:hover {
             background: #c9b896;
             color: #1a1a1a;
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(201, 184, 150, 0.4);
         }
-
+        
         /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
+        
         @keyframes pulse {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: scale(1);
             }
-
             50% {
                 transform: scale(1.05);
             }
         }
-
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(201, 184, 150, 0.6), 0 0 40px rgba(201, 184, 150, 0.3);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(201, 184, 150, 1), 0 0 60px rgba(201, 184, 150, 0.6), 0 0 90px rgba(201, 184, 150, 0.3);
+            }
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
         footer {
             padding: 20px;
             text-align: center;
         }
-
+        
         .footer-block {
             background: linear-gradient(135deg, rgba(30, 25, 20, 0.4) 0%, rgba(40, 35, 30, 0.3) 50%, rgba(30, 25, 20, 0.4) 100%);
             border-radius: 20px;
@@ -580,25 +622,35 @@
             border: 1px solid rgba(201, 184, 150, 0.2);
             backdrop-filter: blur(25px);
         }
-
+        
         .footer-text {
-            font-size: 20px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
             font-weight: 300;
-            color: #f5f5f0;
             letter-spacing: 2px;
             margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite, shine 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .names-accent {
             font-family: 'Great Vibes', cursive;
             font-size: 36px;
-            color: #c9b896;
             margin: 15px 0;
-            animation: pulse 2s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(201, 184, 150, 0.8), 0 0 40px rgba(201, 184, 150, 0.5);
+            animation: pulse 2s ease-in-out infinite, shine 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
+        
         .footer-heart {
             font-size: 40px;
             margin-top: 15px;
@@ -606,13 +658,12 @@
         }
     </style>
 </head>
-
 <body>
     <video class="video-bg" id="bgVideo" loop muted playsinline preload="auto">
         <source src="copy_2E6D0E8D-89E9-4247-AE03-C2F25C055B9C.mp4" type="video/mp4">
     </video>
     <audio id="bgMusic" loop preload="auto">
-        <source src="/01 - Shape Of My Heart.mp3" type="audio/mpeg">
+        <source src="/МОТ - Мурашками.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -623,75 +674,36 @@
             <div class="cover-heart"></div>
             <p class="cover-hint">нажмите, чтобы открыть приглашение</p>
         </div>
-
+        
         <div class="main-content" id="mainContent" aria-hidden="true">
             <!-- Header -->
             <section>
                 <h1 class="names-title">Zayniddin & Parvina</h1>
-                <p style="font-size: 18px; font-weight: 300; margin-bottom: 15px; opacity: 0.9;">С радостью приглашаем
-                    вас</p>
-
+               
+                  <p style="font-size: 18px; font-weight: 300; margin-bottom: 15px; opacity: 0.9;"></p>
             </section>
-
+            
             <!-- Invitation -->
             <section>
-                <p class="guest-name">Уважаемые гости нашего торжества!</p>
-                <p class="invitation-text">С огромной радостью и трепетом в сердце приглашаем вас разделить с нами один
-                    из самых счастливых дней в нашей жизни — день нашей свадьбы.</p>
-                <div
-                    style="margin: 25px 0; text-align: center; max-width: 350px; margin-left: auto; margin-right: auto;">
-
-
+                <p class="guest-name">Уважаемые гости!</p>
+                <p class="invitation-text">Мы с огромной радостью и трепетом в сердце приглашаем вас разделить с нами этот незабываемый день — день нашей свадьбы.</p>
+                <div style="margin: 25px 0; text-align: center; max-width: 350px; margin-left: auto; margin-right: auto;">
+                     
+                     
                 </div>
             </section>
-
+            
             <!-- Calendar -->
             <section>
                 <p class="section-title">Июнь 2026</p>
-                <div class="calendar-grid">
-                    <div class="calendar-day calendar-header">Пн</div>
-                    <div class="calendar-day calendar-header">Вт</div>
-                    <div class="calendar-day calendar-header">Ср</div>
-                    <div class="calendar-day calendar-header">Чт</div>
-                    <div class="calendar-day calendar-header">Пт</div>
-                    <div class="calendar-day calendar-header">Сб</div>
-                    <div class="calendar-day calendar-header">Вс</div>
-                    <div class="calendar-day">1</div>
-                    <div class="calendar-day">2</div>
-                    <div class="calendar-day">3</div>
-                    <div class="calendar-day">4</div>
-                    <div class="calendar-day">5</div>
-                    <div class="calendar-day">6</div>
-                    <div class="calendar-day">7</div>
-                    <div class="calendar-day">8</div>
-                    <div class="calendar-day">9</div>
-                    <div class="calendar-day">10</div>
-                    <div class="calendar-day">11</div>
-                    <div class="calendar-day">12</div>
-                    <div class="calendar-day">13</div>
-                    <div class="calendar-day">14</div>
-                    <div class="calendar-day">15</div>
-                    <div class="calendar-day">16</div>
-                    <div class="calendar-day">17</div>
-                    <div class="calendar-day">18</div>
-                    <div class="calendar-day">19</div>
-                    <div class="calendar-day">20</div>
-                    <div class="calendar-day">21</div>
-                    <div class="calendar-day">22</div>
-                    <div class="calendar-day">23</div>
-                    <div class="calendar-day">24</div>
-                    <div class="calendar-day">25</div>
-                    <div class="calendar-day">26</div>
-                    <div class="calendar-day calendar-wedding"><span class="heart-bg">❤️</span>27</div>
-                    <div class="calendar-day">28</div>
-                    <div class="calendar-day">29</div>
-                    <div class="calendar-day">30</div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated dynamically -->
                 </div>
             </section>
-
+            
             <!-- Countdown -->
             <section>
-                <p class="section-title-large">До нашего дня осталось</p>
+                <p class="section-title-large">До счастливого дня осталось</p>
                 <div class="countdown" id="countdown">
                     <div class="countdown-item">
                         <div class="countdown-number" id="days">--</div>
@@ -711,49 +723,43 @@
                     </div>
                 </div>
             </section>
-
+            
             <!-- Location -->
             <section>
-                <p class="section-title">Локация</p>
-                <div
-                    style="width: 100%; max-width: 400px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; background: rgba(201, 184, 150, 0.1); border: 1px solid rgba(201, 184, 150, 0.2); display: flex; align-items: center; justify-content: center;">
-                    <img src="https://optim.tildacdn.com/tild3265-3938-4437-a466-323830656263/-/resize/512x/-/format/webp/_.png.webp"
-                        alt="Ресторан Богишамол" style="width: 100%; height: 100%; object-fit: cover;">
+                <p class="section-title">Место проведения</p>
+                <div style="width: 100%; max-width: 400px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; background: rgba(201, 184, 150, 0.1); border: 1px solid rgba(201, 184, 150, 0.2); display: flex; align-items: center; justify-content: center;">
+                    <img src="https://optim.tildacdn.com/tild3265-3938-4437-a466-323830656263/-/resize/512x/-/format/webp/_.png.webp" alt="Ресторан Богишамол" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <p class="location-address">Ресторан Богишамол</p>
-                <p class="location-note">Улица: Курчатова возле Областного Гаи</p>
-                <a href="https://yandex.uz/maps/org/88210387340/?ll=66.954747%2C39.651304&z=14" target="_blank"
-                    class="map-btn">НАЖМИТЕ</a>
+                <p class="location-note">Улица Курчатова, возле Областного ГАИ</p>
+                <a href="https://yandex.uz/maps/org/88210387340/?ll=66.954747%2C39.651304&z=14" target="_blank" class="map-btn">Посмотреть на карте</a>
             </section>
-
+            
             <!-- Gifts -->
             <section>
                 <p class="section-title">Подарки</p>
-                <p class="invitation-text">Дорогие гости, приносите с собой веселье и радость в душе, а подарки — в
-                    конверте.</p>
+                <p class="invitation-text">Дорогие гости, приносите с собой хорошее настроение и улыбки, а подарки — в конверте.</p>
             </section>
-
-            <!-- Flowers -->
-
-
-            <!-- Children -->
+            
+            
+            <!-- Dress Code -->
             <section>
-                <p class="section-title">Дети</p>
-                <p class="invitation-text">Этот день важен для нас и мы будем счастливы видеть вас вместе с детьми!</p>
+                <p class="section-title">Дресс-код</p>
+                <p class="dress-text">Мы будем рады приветствовать наших дорогих гостей в элегантных нарядах: джентльмены в чёрных брюках и белоснежных рубашках, дамы в очаровательных красных платьях.</p>
             </section>
-
+            
             <footer>
                 <div class="footer-block">
-
+                    <p class="footer-text">С любовью</p>
                     <p class="names-accent">Zayniddin & Parvina</p>
-
+                     
                 </div>
             </footer>
         </div>
     </div>
-
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('coverEntrance');
             const video = document.getElementById('bgVideo');
             const music = document.getElementById('bgMusic');
@@ -761,7 +767,7 @@
 
             video.load();
 
-            cover.addEventListener('click', function () {
+            cover.addEventListener('click', function() {
                 if (cover.classList.contains('cover-opened')) return;
 
                 cover.classList.add('cover-opened');
@@ -771,7 +777,7 @@
 
                 video.classList.add('active');
                 video.play().catch(e => console.log('Video blocked:', e));
-
+                
                 music.volume = 0.5;
                 music.play().catch(e => console.log('Music blocked:', e));
 
@@ -780,45 +786,45 @@
 
             // Countdown with animation
             let lastValues = { days: -1, hours: -1, minutes: -1, seconds: -1 };
-
+            
             function updateCountdown() {
                 const weddingDate = new Date('2026-06-27T18:00:00');
                 const now = new Date();
                 const diff = weddingDate - now;
-
+                
                 if (diff > 0) {
                     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
+                    
                     // Update with animation
                     const daysEl = document.getElementById('days');
                     const hoursEl = document.getElementById('hours');
                     const minutesEl = document.getElementById('minutes');
                     const secondsEl = document.getElementById('seconds');
-
+                    
                     if (days !== lastValues.days) {
                         daysEl.textContent = days;
                         daysEl.classList.add('animate');
                         setTimeout(() => daysEl.classList.remove('animate'), 600);
                         lastValues.days = days;
                     }
-
+                    
                     if (hours !== lastValues.hours) {
                         hoursEl.textContent = hours;
                         hoursEl.classList.add('animate');
                         setTimeout(() => hoursEl.classList.remove('animate'), 600);
                         lastValues.hours = hours;
                     }
-
+                    
                     if (minutes !== lastValues.minutes) {
                         minutesEl.textContent = minutes;
                         minutesEl.classList.add('animate');
                         setTimeout(() => minutesEl.classList.remove('animate'), 600);
                         lastValues.minutes = minutes;
                     }
-
+                    
                     if (seconds !== lastValues.seconds) {
                         secondsEl.textContent = seconds;
                         secondsEl.classList.add('animate');
@@ -827,11 +833,52 @@
                     }
                 }
             }
-
+            
             updateCountdown();
             setInterval(updateCountdown, 1000);
+
+            // Generate dynamic calendar
+            function generateCalendar(year, month) {
+                const calendarGrid = document.getElementById('calendarGrid');
+                calendarGrid.innerHTML = '';
+
+                // Headers
+                const headers = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                headers.forEach(header => {
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'calendar-day calendar-header';
+                    headerDiv.textContent = header;
+                    calendarGrid.appendChild(headerDiv);
+                });
+
+                // Get first day and last date
+                const firstDay = new Date(year, month, 1).getDay(); // 0 = Sunday
+                const lastDate = new Date(year, month + 1, 0).getDate();
+
+                // Adjust to Monday start (0 = Monday, 6 = Sunday)
+                let startDay = firstDay === 0 ? 6 : firstDay - 1;
+
+                // Empty cells before first day
+                for (let i = 0; i < startDay; i++) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'calendar-day';
+                    calendarGrid.appendChild(emptyDiv);
+                }
+
+                // Days
+                for (let day = 1; day <= lastDate; day++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'calendar-day';
+                    dayDiv.textContent = day;
+                    if (day === 27) {
+                        dayDiv.classList.add('calendar-wedding');
+                    }
+                    calendarGrid.appendChild(dayDiv);
+                }
+            }
+
+            generateCalendar(2026, 5); // June 2026
         });
     </script>
 </body>
-
 </html>
