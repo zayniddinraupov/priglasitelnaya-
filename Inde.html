@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #1a1a1a;
+            color: #f3f1ee;
+            line-height: 1.6;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            min-height: 100vh;
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Cover */
+        .cover {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+         .cover-opened {
+            opacity: 0;
+            transform: scale(1.1) translateY(-50px);
+            pointer-events: none;
+        }
+        
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 50px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease, shine 3s linear infinite;
+            letter-spacing: 5px;
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cover-subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 52px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            animation: fadeInUp 1s ease 0.2s both, shine 3s linear infinite;
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cover-heart {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 34px;
+            background: center/contain no-repeat url('https://optim.tildacdn.com/tild3637-3934-4632-b366-633138303537/-/resize/281x/-/format/webp/photo.png.webp');
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5));
+        }
+        
+        .cover-heart:hover {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 30px rgba(201, 184, 150, 0.6));
+        }
+
+        .cover-hint {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 40px;
+            opacity: 1;
+            animation: fadeInUp 1s ease 0.4s both, shine 3s linear infinite;
+            filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .main-content {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(30px);
+            pointer-events: none;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .main-content.visible {
+            max-height: 9999px;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        section {
+            padding: 30px 25px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(30, 25, 20, 0.4) 0%, rgba(40, 35, 30, 0.3) 50%, rgba(30, 25, 20, 0.4) 100%);
+            border-radius: 20px;
+            backdrop-filter: blur(25px);
+            margin: 20px auto;
+            max-width: 550px;
+            border: 1px solid rgba(201, 184, 150, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 184, 150, 0.3), transparent);
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        section:hover::before {
+            left: 100%;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+            border-color: rgba(201, 184, 150, 0.3);
+        }
+        
+        /* Names */
+        .names-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            animation: fadeInUp 0.8s ease, glow 2s ease-in-out infinite alternate, shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .date-title {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Text Styles */
+        .invitation-text {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 450px;
+            margin: 12px auto;
+            letter-spacing: 0.5px;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin: 15px auto;
+            position: relative;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(201, 184, 150, 0.4));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9b896, transparent);
+            margin: 10px auto;
+            box-shadow: 0 0 10px rgba(201, 184, 150, 0.5);
+        }
+        
+        .section-title-large {
+            font-size: 22px;
+            font-weight: 300;
+            margin: 10px auto;
+            line-height: 1.5;
+            max-width: 450px;
+            letter-spacing: 0.5px;
+            filter: drop-shadow(0 0 20px rgba(233, 225, 214, 0.3));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .guest-name {
+            font-size: 50px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            font-family: 'Great Vibes', cursive;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.4));
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin: 15px auto;
+            position: relative;
+            display: inline-block;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9b896, transparent);
+            margin: 10px auto;
+        }
+        
+        .section-title-large {
+            font-size: 20px;
+            font-weight: 300;
+            margin: 10px auto;
+            line-height: 1.5;
+            max-width: 450px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .guest-name {
+            font-size: 30px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            font-family: 'Great Vibes', cursive;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px auto;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            min-width: 70px;
+            background: rgba(201, 184, 150, 0.1);
+            padding: 15px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(201, 184, 150, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(201, 184, 150, 0.2);
+        }
+        
+        .countdown-item:hover {
+            transform: scale(1.1);
+            background: rgba(201, 184, 150, 0.2);
+            box-shadow: 0 0 25px rgba(201, 184, 150, 0.4);
+        }
+        
+        .countdown-number {
+            font-size: 36px;
+            font-weight: 300;
+            display: block;
+            line-height: 1;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.5));
+            transition: all 0.3s ease;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .countdown-number.animate {
+            animation: countPulse 0.6s ease;
+        }
+        
+        @keyframes countPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+                text-shadow: 0 0 30px rgba(201, 184, 150, 0.8);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .countdown-label {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-top: 5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            min-width: 70px;
+            background: rgba(201, 184, 150, 0.1);
+            padding: 15px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(201, 184, 150, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .countdown-item:hover {
+            transform: scale(1.1);
+            background: rgba(201, 184, 150, 0.2);
+        }
+        
+        .countdown-number {
+            font-size: 36px;
+            font-weight: 300;
+            display: block;
+            line-height: 1;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .countdown-label {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-top: 5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Calendar */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            max-width: 350px;
+            margin: 20px auto;
+            font-size: 13px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 10px 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-day:hover:not(.calendar-header):not(.calendar-wedding) {
+            background: rgba(201, 184, 150, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .calendar-header {
+            opacity: 0.5;
+            font-weight: 500;
+        }
+        
+        .calendar-wedding {
+            background: linear-gradient(135deg, #c9b896 0%, #b5a583 100%);
+            color: #1a1a1a;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(201, 184, 150, 0.4);
+        }
+        
+        /* Location */
+        .location-address {
+            font-size: 22px;
+            font-weight: 400;
+            margin: 15px auto;
+            max-width: 400px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .location-note {
+            font-size: 15px;
+            font-weight: 300;
+            opacity: 0.8;
+            max-width: 400px;
+            margin: 10px auto;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dress-text {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 450px;
+            margin: 12px auto;
+            letter-spacing: 0.5px;
+            animation: shine 3s linear infinite;
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .map-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            margin: 15px 0;
+            background: transparent;
+            border: 2px solid #c9b896;
+            color: #c9b896;
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .map-btn:hover {
+            background: #c9b896;
+            color: #1a1a1a;
+        }
+        
+        .map-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 184, 150, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .map-btn:hover::before {
+            left: 100%;
+        }
+        
+        .map-btn:hover {
+            background: #c9b896;
+            color: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 184, 150, 0.4);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(201, 184, 150, 0.6), 0 0 40px rgba(201, 184, 150, 0.3);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(201, 184, 150, 1), 0 0 60px rgba(201, 184, 150, 0.6), 0 0 90px rgba(201, 184, 150, 0.3);
+            }
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        footer {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .footer-block {
+            background: linear-gradient(135deg, rgba(30, 25, 20, 0.4) 0%, rgba(40, 35, 30, 0.3) 50%, rgba(30, 25, 20, 0.4) 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 550px;
+            margin: 0 auto;
+            border: 1px solid rgba(201, 184, 150, 0.2);
+            backdrop-filter: blur(25px);
+        }
+        
+        .footer-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite, shine 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            background: linear-gradient(to right, #c9b896 20%, #ffffff 40%, #ffffff 60%, #c9b896 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .names-accent {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            margin: 15px 0;
+            animation: pulse 2s ease-in-out infinite, shine 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(201, 184, 150, 0.8)) drop-shadow(0 0 40px rgba(201, 184, 150, 0.5));
+            background: linear-gradient(to right, #f3f1ee 20%, #ffffff 40%, #ffffff 60%, #f3f1ee 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-heart {
+            font-size: 40px;
+            margin-top: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <video class="video-bg" id="bgVideo" loop muted playsinline preload="auto">
+        <source src="copy_2E6D0E8D-89E9-4247-AE03-C2F25C055B9C.mp4" type="video/mp4">
+    </video>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="/МОТ - Мурашками.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- Cover -->
+        <div class="cover" id="coverEntrance">
+            <p class="cover-title">Вам пришло</p>
+            <p class="cover-subtitle">Приглашение</p>
+            <div class="cover-heart"></div>
+            <p class="cover-hint">нажмите, чтобы открыть приглашение</p>
+        </div>
+        
+        <div class="main-content" id="mainContent" aria-hidden="true">
+            <!-- Header -->
+            <section>
+                <h1 class="names-title">Zayniddin & Parvina</h1>
+               
+                  <p style="font-size: 18px; font-weight: 300; margin-bottom: 15px; opacity: 0.9;"></p>
+            </section>
+            
+            <!-- Invitation -->
+            <section>
+                <p class="guest-name">Уважаемые гости!</p>
+                <p class="invitation-text">Мы с огромной радостью и трепетом в сердце приглашаем вас разделить с нами этот незабываемый день — день нашей свадьбы.</p>
+                <div style="margin: 25px 0; text-align: center; max-width: 350px; margin-left: auto; margin-right: auto;">
+                     
+                     
+                </div>
+            </section>
+            
+            <!-- Calendar -->
+            <section>
+                <p class="section-title">Июнь 2026</p>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated dynamically -->
+                </div>
+            </section>
+            
+            <!-- Countdown -->
+            <section>
+                <p class="section-title-large">До счастливого дня осталось</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">--</div>
+                        <div class="countdown-label">дней</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">--</div>
+                        <div class="countdown-label">часов</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">--</div>
+                        <div class="countdown-label">минут</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">--</div>
+                        <div class="countdown-label">секунд</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Location -->
+            <section>
+                <p class="section-title">Место проведения</p>
+                <div style="width: 100%; max-width: 400px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; background: rgba(201, 184, 150, 0.1); border: 1px solid rgba(201, 184, 150, 0.2); display: flex; align-items: center; justify-content: center;">
+                    <img src="https://optim.tildacdn.com/tild3265-3938-4437-a466-323830656263/-/resize/512x/-/format/webp/_.png.webp" alt="Ресторан Богишамол" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <p class="location-address">Ресторан Богишамол</p>
+                <p class="location-note">Улица Курчатова, возле Областного ГАИ</p>
+                <a href="https://yandex.uz/maps/org/88210387340/?ll=66.954747%2C39.651304&z=14" target="_blank" class="map-btn">Посмотреть на карте</a>
+            </section>
+            
+            <!-- Gifts -->
+            <section>
+                <p class="section-title">Подарки</p>
+                <p class="invitation-text">Дорогие гости, приносите с собой хорошее настроение и улыбки, а подарки — в конверте.</p>
+            </section>
+            
+            
+            <!-- Dress Code -->
+            <section>
+                <p class="section-title">Дресс-код</p>
+                <p class="dress-text">Мы будем рады приветствовать наших дорогих гостей в элегантных нарядах: джентльмены в чёрных брюках и белоснежных рубашках, дамы в очаровательных красных платьях.</p>
+            </section>
+            
+            <footer>
+                <div class="footer-block">
+                    <p class="footer-text">С любовью</p>
+                    <p class="names-accent">Zayniddin & Parvina</p>
+                     
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cover = document.getElementById('coverEntrance');
+            const video = document.getElementById('bgVideo');
+            const music = document.getElementById('bgMusic');
+            const mainContent = document.getElementById('mainContent');
+
+            video.load();
+
+            cover.addEventListener('click', function() {
+                if (cover.classList.contains('cover-opened')) return;
+
+                cover.classList.add('cover-opened');
+                mainContent.classList.add('visible');
+                mainContent.setAttribute('aria-hidden', 'false');
+                document.body.style.overflowY = 'auto';
+
+                video.classList.add('active');
+                video.play().catch(e => console.log('Video blocked:', e));
+                
+                music.volume = 0.5;
+                music.play().catch(e => console.log('Music blocked:', e));
+
+                setTimeout(() => cover.style.display = 'none', 900);
+            });
+
+            // Countdown with animation
+            let lastValues = { days: -1, hours: -1, minutes: -1, seconds: -1 };
+            
+            function updateCountdown() {
+                const weddingDate = new Date('2026-06-27T18:00:00');
+                const now = new Date();
+                const diff = weddingDate - now;
+                
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    
+                    // Update with animation
+                    const daysEl = document.getElementById('days');
+                    const hoursEl = document.getElementById('hours');
+                    const minutesEl = document.getElementById('minutes');
+                    const secondsEl = document.getElementById('seconds');
+                    
+                    if (days !== lastValues.days) {
+                        daysEl.textContent = days;
+                        daysEl.classList.add('animate');
+                        setTimeout(() => daysEl.classList.remove('animate'), 600);
+                        lastValues.days = days;
+                    }
+                    
+                    if (hours !== lastValues.hours) {
+                        hoursEl.textContent = hours;
+                        hoursEl.classList.add('animate');
+                        setTimeout(() => hoursEl.classList.remove('animate'), 600);
+                        lastValues.hours = hours;
+                    }
+                    
+                    if (minutes !== lastValues.minutes) {
+                        minutesEl.textContent = minutes;
+                        minutesEl.classList.add('animate');
+                        setTimeout(() => minutesEl.classList.remove('animate'), 600);
+                        lastValues.minutes = minutes;
+                    }
+                    
+                    if (seconds !== lastValues.seconds) {
+                        secondsEl.textContent = seconds;
+                        secondsEl.classList.add('animate');
+                        setTimeout(() => secondsEl.classList.remove('animate'), 600);
+                        lastValues.seconds = seconds;
+                    }
+                }
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // Generate dynamic calendar
+            function generateCalendar(year, month) {
+                const calendarGrid = document.getElementById('calendarGrid');
+                calendarGrid.innerHTML = '';
+
+                // Headers
+                const headers = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                headers.forEach(header => {
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'calendar-day calendar-header';
+                    headerDiv.textContent = header;
+                    calendarGrid.appendChild(headerDiv);
+                });
+
+                // Get first day and last date
+                const firstDay = new Date(year, month, 1).getDay(); // 0 = Sunday
+                const lastDate = new Date(year, month + 1, 0).getDate();
+
+                // Adjust to Monday start (0 = Monday, 6 = Sunday)
+                let startDay = firstDay === 0 ? 6 : firstDay - 1;
+
+                // Empty cells before first day
+                for (let i = 0; i < startDay; i++) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'calendar-day';
+                    calendarGrid.appendChild(emptyDiv);
+                }
+
+                // Days
+                for (let day = 1; day <= lastDate; day++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'calendar-day';
+                    dayDiv.textContent = day;
+                    if (day === 27) {
+                        dayDiv.classList.add('calendar-wedding');
+                    }
+                    calendarGrid.appendChild(dayDiv);
+                }
+            }
+
+            generateCalendar(2026, 5); // June 2026
+        });
+    </script>
+</body>
+</html>
