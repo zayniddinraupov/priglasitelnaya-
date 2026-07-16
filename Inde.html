@@ -501,11 +501,25 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        .location-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 40px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 18px rgba(201, 184, 150, 0.85);
+            color: #f3e6d8;
+            background: none;
+            -webkit-text-fill-color: #f3e6d8;
+            display: inline-block;
+        }
         
         .location-note {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 300;
-            opacity: 0.8;
+            opacity: 0.9;
             max-width: 400px;
             margin: 10px auto;
             animation: shine 3s linear infinite;
@@ -678,7 +692,7 @@
         <div class="main-content" id="mainContent" aria-hidden="true">
             <!-- Header -->
             <section>
-                <h1 class="names-title">Zayniddin & Parvina</h1>
+                <h1 class="names-title">Mirkarim & Madina </h1>
                
                   <p style="font-size: 18px; font-weight: 300; margin-bottom: 15px; opacity: 0.9;"></p>
             </section>
@@ -695,7 +709,7 @@
             
             <!-- Calendar -->
             <section>
-                <p class="section-title">Июнь 2026</p>
+                <p class="section-title">Июль 2026</p>
                 <div class="calendar-grid" id="calendarGrid">
                     <!-- Calendar will be generated dynamically -->
                 </div>
@@ -730,9 +744,9 @@
                 <div style="width: 100%; max-width: 400px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; background: rgba(201, 184, 150, 0.1); border: 1px solid rgba(201, 184, 150, 0.2); display: flex; align-items: center; justify-content: center;">
                     <img src="https://optim.tildacdn.com/tild3265-3938-4437-a466-323830656263/-/resize/512x/-/format/webp/_.png.webp" alt="Ресторан Богишамол" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <p class="location-address">Ресторан Богишамол</p>
-                <p class="location-note">Улица Курчатова, возле Областного ГАИ</p>
-                <a href="https://yandex.uz/maps/org/88210387340/?ll=66.954747%2C39.651304&z=14" target="_blank" class="map-btn">Посмотреть на карте</a>
+                <p class="location-address location-name"><i>Ресторант & Зилолбахт</i></p>
+                <p class="location-note">Улица: Куксарой </p>
+                <a href="https://yandex.uz/maps/org/zilol_baxt/192176454950/?ll=66.964985%2C39.655310&z=15.72" target="_blank" class="map-btn">Посмотреть на карте</a>
             </section>
             
             <!-- Gifts -->
@@ -751,7 +765,7 @@
             <footer>
                 <div class="footer-block">
                     <p class="footer-text">С любовью</p>
-                    <p class="names-accent">Zayniddin & Parvina</p>
+                    <p class="names-accent">Mirkarim & Madina</p>
                      
                 </div>
             </footer>
@@ -788,7 +802,7 @@
             let lastValues = { days: -1, hours: -1, minutes: -1, seconds: -1 };
             
             function updateCountdown() {
-                const weddingDate = new Date('2026-06-27T18:00:00');
+                const weddingDate = new Date('2026-07-27T19:00:00');
                 const now = new Date();
                 const diff = weddingDate - now;
                 
